@@ -106,12 +106,13 @@ export default function LinkedList() {
 
       insertAt(index, value) {
          if (index < 0 || index > this.size) return;
-         let current, previous, newNode;
 
-         if (index === 0 ) {
-            this.prepend(value)
-            return
+         if (index === 0) {
+            this.prepend(value);
+            return;
          }
+
+         let current, previous, newNode;
 
          current = this.head;
          let count = 0;
@@ -127,6 +128,30 @@ export default function LinkedList() {
          previous.next = newNode;
 
          this.size++;
+      },
+
+      removeAt(index) {
+         if (index < 0 || index > this.size) return;
+
+         if (index === 0) {
+            this.pop();
+            return;
+         }
+
+         let current, previous;
+
+         current = this.head;
+         let count = 0;
+
+         while (count < index) {
+            previous = current;
+            current = current.next;
+            count++;
+         }
+
+         previous.next = current.next;
+
+         this.size--;
       },
 
       toString() {

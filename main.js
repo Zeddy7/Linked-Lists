@@ -18,5 +18,7 @@ console.log(ll.pop());
 console.log(ll.contains(120));
 console.log(ll.findIndex(1000));
 ll.insertAt(0, 2122);
+ll.removeAt(1);
+console.log(ll.listSize());
 
 console.log(ll.toString());
