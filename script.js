@@ -54,9 +54,7 @@ export default function LinkedList() {
       },
 
       at(index) {
-         if (!this.head) {
-            return undefined;
-         } else if (index >= this.size) {
+         if (!this.head || index >= this.size) {
             return undefined;
          }
 
@@ -104,15 +102,28 @@ export default function LinkedList() {
          return -1;
       },
 
-      insertAt(index, value) {
+      insertAt(index, ...values) {
          if (index < 0 || index > this.size) return;
 
          if (index === 0) {
-            this.prepend(value);
+            let firstEntry = Node(values[0]);
+            let nextEntry = firstEntry;
+            let idx = 1;
+
+            while (idx < values.length) {
+               nextEntry.next = Node(values[idx]);
+               nextEntry = nextEntry.next;
+               idx++;
+            }
+
+            nextEntry.next = this.head;
+            this.head = firstEntry;
+
+            this.size += values.length;
             return;
          }
 
-         let current, previous, newNode;
+         let current, previous;
 
          current = this.head;
          let count = 0;
@@ -123,11 +134,20 @@ export default function LinkedList() {
             count++;
          }
 
-         newNode = Node(value);
-         newNode.next = current;
-         previous.next = newNode;
+         let firstEntry = Node(values[0]);
+         let nextEntry = firstEntry;
+         let idx = 1;
 
-         this.size++;
+         while (idx < values.length) {
+            nextEntry.next = Node(values[idx]);
+            nextEntry = nextEntry.next;
+            idx++;
+         }
+
+         previous.next = firstEntry;
+         nextEntry.next = current;
+
+         this.size += values.length;
       },
 
       removeAt(index) {
@@ -162,8 +182,7 @@ export default function LinkedList() {
             output += `(${current.value}) -> `;
             current = current.next;
          }
-         output += "null";
-         return output;
+         return (output += "null");
       },
    };
 }
